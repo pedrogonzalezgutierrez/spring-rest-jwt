@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/public")
+@RequestMapping(value = "/")
 public class PublicContentController {
 	
 	@RequestMapping(method = RequestMethod.GET)

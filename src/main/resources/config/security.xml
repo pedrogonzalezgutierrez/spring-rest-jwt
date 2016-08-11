@@ -22,8 +22,6 @@
 		<security:intercept-url pattern="/secure/roleeditor/**" access="hasRole('ROLE_EDITOR')" />
 		<security:intercept-url pattern="/secure/rolestaff/**" access="hasRole('ROLE_STAFF')" />
 		
-		<security:intercept-url pattern="/public/**" access="isAuthenticated()" />
-		
 		<security:access-denied-handler error-page="/403" />
 		
 	</security:http>
