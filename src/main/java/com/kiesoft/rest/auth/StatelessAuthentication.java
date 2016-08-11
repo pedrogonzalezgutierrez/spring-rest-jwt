@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import com.kiesoft.rest.auth.authority.DefaultAuthority;
+import com.kiesoft.rest.auth.authority.DefaultGrantedAuthority;
 
 public class StatelessAuthentication implements Authentication {
 
@@ -29,7 +29,7 @@ public class StatelessAuthentication implements Authentication {
 	/**
 	 * User roles
 	 */
-	private List<DefaultAuthority> roles = new ArrayList<>();
+	private List<DefaultGrantedAuthority> roles = new ArrayList<>();
 
 	/**
 	 * Is authenticated?
@@ -55,9 +55,9 @@ public class StatelessAuthentication implements Authentication {
 	public StatelessAuthentication(String name, String password, Collection<? extends GrantedAuthority> collection) {
 		this.name = name;
 		this.password = password;
-		List<DefaultAuthority> roles = new ArrayList<>();
+		List<DefaultGrantedAuthority> roles = new ArrayList<>();
 		for (GrantedAuthority grantedAuthority : collection) {
-			roles.add(new DefaultAuthority(grantedAuthority.getAuthority()));
+			roles.add(new DefaultGrantedAuthority(grantedAuthority.getAuthority()));
 		}
 		this.roles = roles;
 		this.isAuthenticated = Boolean.TRUE;

@@ -13,7 +13,7 @@ import org.springframework.security.jwt.crypto.sign.MacSigner;
 
 import com.kiesoft.rest.auth.StatelessAuthentication;
 import com.kiesoft.rest.auth.UserCredentials;
-import com.kiesoft.rest.auth.authority.DefaultAuthority;
+import com.kiesoft.rest.auth.authority.DefaultGrantedAuthority;
 import com.kiesoft.rest.auth.jwt.JWTToken;
 
 public class JWTAuthenticationProvider implements AuthenticationProvider {
@@ -47,8 +47,8 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
 
 		// Extract roles from DB
 		String rolename = userCredentials.getUserRoles().get(jwtToken.getName());
-		DefaultAuthority role = new DefaultAuthority(rolename);
-		List<DefaultAuthority> roles = new ArrayList<>();
+		DefaultGrantedAuthority role = new DefaultGrantedAuthority(rolename);
+		List<DefaultGrantedAuthority> roles = new ArrayList<>();
 		roles.add(role);
 
 		// Create the authentication object

@@ -10,6 +10,7 @@
 		http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 	
 	<security:http
+		pattern="/secure/**"
 		use-expressions="true"
 		auto-config="false"
 		create-session="stateless"

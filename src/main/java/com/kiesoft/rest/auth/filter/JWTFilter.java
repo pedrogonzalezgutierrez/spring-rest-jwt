@@ -40,8 +40,11 @@ public class JWTFilter extends OncePerRequestFilter {
 			authentication = new StatelessAuthentication();
 		}
 		// Try to authenticate
-		SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(authentication));
-		filterChain.doFilter(request, response);
+		Authentication finalAuthentication=authenticationManager.authenticate(authentication);
+		if( finalAuthentication != null ) {
+			SecurityContextHolder.getContext().setAuthentication(finalAuthentication);
+			filterChain.doFilter(request, response);
+		}
 	}
 
 }
