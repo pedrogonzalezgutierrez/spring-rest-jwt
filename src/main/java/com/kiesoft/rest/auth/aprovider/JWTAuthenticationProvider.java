@@ -30,7 +30,7 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		JWTToken jwtToken = (JWTToken) authentication;
 
-		// Get password from DB
+		// Here you should get password from DB instead of this POC
 		String password = userCredentials.getUserSecret().get(jwtToken.getName());
 
 		// Check if the signature is signed with this secret/password

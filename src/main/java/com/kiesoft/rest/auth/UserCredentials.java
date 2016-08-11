@@ -4,11 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This should be stored in DB. Since this is a POC I will leave here for
- * simplify Here we have usernames and its related secret (password) and ROL
+ * This should be stored in DB. Since this is a POC I will leave here the credentials
  * 
- * @author pedrola
- *
  */
 public class UserCredentials {
 
@@ -17,17 +14,14 @@ public class UserCredentials {
 
 	public UserCredentials() {
 
-		userSecret.put("pedrola", "this_is_a_SECRET");
-		userRoles.put("pedrola", "ROLE_ADMIN");
+		userSecret.put("admin", "admin");
+		userRoles.put("admin", "ROLE_ADMIN");
 
-		userSecret.put("docato", "so_rubbish!");
-		userRoles.put("docato", "ROLE_EDITOR");
+		userSecret.put("editor", "editor");
+		userRoles.put("editor", "ROLE_EDITOR");
 
-		userSecret.put("androidAPP", "another_SECRET");
-		userRoles.put("androidAPP", "ROLE_STAFF");
-
-		userSecret.put("guest", "gu3st-US3R");
-		userRoles.put("guest", "ROLE_GUEST");
+		userSecret.put("staff", "staff");
+		userRoles.put("staff", "ROLE_STAFF");
 
 	}
 
