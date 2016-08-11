@@ -12,6 +12,7 @@
 	<security:http
 		use-expressions="true"
 		auto-config="false"
+		create-session="stateless"
 		entry-point-ref="restEntryPoint">
 		
 		<security:custom-filter ref="jwtFilter" position="FORM_LOGIN_FILTER" />
