@@ -11,15 +11,20 @@ import org.springframework.security.jwt.JwtHelper;
 import org.springframework.security.jwt.crypto.sign.InvalidSignatureException;
 import org.springframework.security.jwt.crypto.sign.MacSigner;
 
-import com.kiesoft.rest.auth.BMJAuthentication;
-import com.kiesoft.rest.auth.JWTToken;
+import com.kiesoft.rest.auth.StatelessAuthentication;
 import com.kiesoft.rest.auth.UserCredentials;
 import com.kiesoft.rest.auth.authority.DefaultAuthority;
+import com.kiesoft.rest.auth.jwt.JWTToken;
 
 public class JWTAuthenticationProvider implements AuthenticationProvider {
 
 	@Autowired
 	private UserCredentials userCredentials;
+
+	@Override
+	public boolean supports(Class<?> authentication) {
+		return authentication.equals(JWTToken.class);
+	}
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -47,14 +52,9 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
 		roles.add(role);
 
 		// Create the authentication object
-		BMJAuthentication validJWTToken = new BMJAuthentication(jwtToken.getName(), password, roles);
+		StatelessAuthentication validJWTToken = new StatelessAuthentication(jwtToken.getName(), password, roles);
 
 		return validJWTToken;
-	}
-
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return authentication.equals(JWTToken.class);
 	}
 
 }

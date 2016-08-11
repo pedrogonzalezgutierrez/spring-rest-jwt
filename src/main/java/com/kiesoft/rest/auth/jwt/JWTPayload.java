@@ -1,4 +1,4 @@
-package com.kiesoft.rest.auth.jwtpayload;
+package com.kiesoft.rest.auth.jwt;
 
 /**
  * Map of the claims of the JWT token

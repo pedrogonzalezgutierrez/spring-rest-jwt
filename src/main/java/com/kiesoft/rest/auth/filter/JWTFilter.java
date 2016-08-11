@@ -12,14 +12,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.kiesoft.rest.auth.BMJAuthentication;
-import com.kiesoft.rest.auth.JWTToken;
+import com.kiesoft.rest.auth.StatelessAuthentication;
+import com.kiesoft.rest.auth.jwt.JWTToken;
 
-public class TokenProcessingFilter extends OncePerRequestFilter {
+public class JWTFilter extends OncePerRequestFilter {
 
 	private final AuthenticationManager authenticationManager;
 
-	public TokenProcessingFilter(AuthenticationManager authenticationManager) {
+	public JWTFilter(AuthenticationManager authenticationManager) {
 		super();
 		this.authenticationManager = authenticationManager;
 	}
@@ -37,7 +37,7 @@ public class TokenProcessingFilter extends OncePerRequestFilter {
 			authentication = new JWTToken(token);
 		} else {
 			// There is no token in the request, creating a guest object
-			authentication = new BMJAuthentication();
+			authentication = new StatelessAuthentication();
 		}
 		// Try to authenticate
 		SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(authentication));

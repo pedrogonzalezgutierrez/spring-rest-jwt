@@ -1,4 +1,4 @@
-package com.kiesoft.rest.auth;
+package com.kiesoft.rest.auth.jwt;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -9,15 +9,11 @@ import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kiesoft.rest.auth.jwtpayload.JWTPayload;
 
 /**
  * Decode the token in order to make sure we are dealing with a JWT token If the
  * token is correct it will extract the claims (metadata) of the token, it means
  * populate username
- * 
- * @author pedrola
- *
  */
 public class JWTToken implements Authentication {
 
