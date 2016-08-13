@@ -33,11 +33,19 @@ dependencies {
 	// Spring boot
     compile("org.springframework.boot:spring-boot-starter-web")
     
-    compile("org.springframework.security:spring-security-jwt")
-    
     // Security
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.security:spring-security-jwt")
+    compile("com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:1.1")
+    
+    // JPA
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
+    // JPA Driver
+	compile('org.postgresql:postgresql:9.4.1209')
+    
+    // Mapping framework    
+    compile("net.sf.dozer:dozer:5.5.1")
     
 	// Tomcat	
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")

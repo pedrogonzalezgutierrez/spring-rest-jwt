@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+	
+	<security:http
+		pattern="/**"
+		use-expressions="true"
+		auto-config="false"
+		create-session="stateless"
+		entry-point-ref="restEntryPoint">
+		
+		<security:custom-filter ref="jwtFilter" position="FORM_LOGIN_FILTER" />
+
+		<!-- Create new user -->		
+		<security:intercept-url pattern="/user2" method="POST" access="hasRole('ROLE_ADMIN')" />
+		<!-- Get users -->
+		<security:intercept-url pattern="/user" method="GET" access="hasRole('ROLE_ADMIN')" />
+		
+		
+		<!-- Get single user -->
+		<!-- 
+		<security:intercept-url pattern="/user/" method="GET" access="hasRole('ROLE_ADMIN')" />
+		
+		<security:intercept-url pattern="/user" method="PUT" access="hasRole('ROLE_ADMIN')" />
+		
+		<security:intercept-url pattern="/user" method="DELETE" access="hasRole('ROLE_ADMIN')" />
+		
+		<security:intercept-url pattern="/user" method="PATCH" access="hasRole('ROLE_ADMIN')" />
+		 -->
+		
+		
+		<security:access-denied-handler error-page="/403" />
+		
+	</security:http>
+	
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider ref="jwtAuthenticationProvider"></security:authentication-provider>
+	</security:authentication-manager>
+	
+	
+	<bean id="restEntryPoint" class="com.kiesoft.auth.entrypoint.RestEntryPoint" />
+	<bean id="jwtFilter" class="com.kiesoft.auth.filter.JWTFilter">
+		<constructor-arg ref="authenticationManager" />
+	</bean>
+
+	<bean id="jwtAuthenticationProvider" class="com.kiesoft.auth.aprovider.JWTAuthenticationProvider" />
+	
+</beans>

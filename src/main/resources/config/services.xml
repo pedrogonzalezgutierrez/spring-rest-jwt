@@ -6,4 +6,13 @@
 			http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
+	<!-- Response Service -->
+	<bean id="responseErrorService" class="com.kiesoft.serviceimpl.response.DefaultResponseErrorService" />
+	
+	<!-- User Service -->
+	<bean id="userDTOService" class="com.kiesoft.serviceimpl.user.DefaultUserDTOService" />
+	
+	<!-- Note Service -->
+	<bean id="noteDTOService" class="com.kiesoft.serviceimpl.note.DefaultNoteDTOService" />
+	
 </beans>
