@@ -16,7 +16,7 @@ import com.kiesoft.auth.authority.DefaultGrantedAuthority;
 import com.kiesoft.dto.role.RoleDTO;
 import com.kiesoft.dto.user.UserDTO;
 import com.kiesoft.exceptions.InvalidTokenException;
-import com.kiesoft.service.note.UserDTOService;
+import com.kiesoft.service.user.UserDTOService;
 
 public class AuthenticationProviderJWT implements AuthenticationProvider {
 	

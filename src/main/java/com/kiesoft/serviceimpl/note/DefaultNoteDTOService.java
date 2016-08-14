@@ -16,7 +16,7 @@ import com.kiesoft.dto.note.NoteDTO;
 import com.kiesoft.exceptions.PersistenceProblemException;
 import com.kiesoft.jpa.note.NoteEntity;
 import com.kiesoft.repository.NoteRepository;
-import com.kiesoft.service.user.NoteDTOService;
+import com.kiesoft.service.note.NoteDTOService;
 
 @Transactional
 public class DefaultNoteDTOService implements NoteDTOService {

@@ -1,5 +1,7 @@
 package com.kiesoft.validator;
 
+import java.util.regex.Pattern;
+
 import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.PolicyFactory;
 import org.springframework.validation.Errors;
@@ -20,6 +22,24 @@ public abstract class AbstractValidator {
 	public void rejectFieldIfNumberMinMaxRange(String field, Integer number, int min, int max, Errors errors) {
 		if ((number < min) || (number > max)) {
 			errors.rejectValue(field, field+": Wrong range");
+		}
+	}
+	
+	public void rejectFieldIfNotAlphaNumeric(String field, String string, Errors errors) {
+		if( Pattern.compile("^[a-zA-Z0-9]*$").matcher(string).matches() == false ) {
+			errors.rejectValue(field, field+": Not alphanumeric");
+		}
+	}
+	
+	public void rejectFieldIfNotContainsUpperCharacters(String field, String string, Errors errors) {
+		if( Pattern.compile("[A-Z]").matcher(string).find() == false ) {
+			errors.rejectValue(field, field+": It needs to contains at least one upper case character");
+		}
+	}
+	
+	public void rejectFieldIfNotContainsNumbers(String field, String string, Errors errors) {
+		if( Pattern.compile("[0-9]").matcher(string).find() == false ) {
+			errors.rejectValue(field, field+": It needs to contains at least one number");
 		}
 	}
 

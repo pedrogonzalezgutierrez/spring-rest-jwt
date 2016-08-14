@@ -1,4 +1,4 @@
-package com.kiesoft.service.note;
+package com.kiesoft.service.user;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -17,7 +17,7 @@ import com.kiesoft.dto.response.PageResponseDTO;
 import com.kiesoft.dto.user.UserDTO;
 import com.kiesoft.helper.response.ResponseErrorHelper;
 import com.kiesoft.helper.validator.ValidatorHelper;
-import com.kiesoft.service.note.UserDTOService;
+import com.kiesoft.service.user.UserDTOService;
 import com.kiesoft.validator.UserDTOValidator;
 
 @RestController
@@ -44,7 +44,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/user", method=RequestMethod.POST)
-	public ResponseEntity<GenericResponse> newUser(@RequestParam("username") String username, @RequestParam("password") String password) {
+	public ResponseEntity<GenericResponse> register(@RequestParam("username") String username, @RequestParam("password") String password) {
 		
 		UserDTO userDTO=new UserDTO();
 		userDTO.setUsername(username);
@@ -63,6 +63,26 @@ public class UserController {
 		GenericResponseDTO responseDTO=new GenericResponseDTO();
 		responseDTO.setMessage("Welcome "+savedUserDTO.getUsername());
 		return ResponseEntity.ok().body(responseDTO);
+	}
+
+	
+	/*
+	 * Setters
+	 */
+	public void setUserDTOService(UserDTOService userDTOService) {
+		this.userDTOService = userDTOService;
+	}
+
+	public void setResponseErrorService(ResponseErrorHelper responseErrorService) {
+		this.responseErrorService = responseErrorService;
+	}
+
+	public void setValidatorService(ValidatorHelper validatorService) {
+		this.validatorService = validatorService;
+	}
+
+	public void setUserDTOValidator(UserDTOValidator userDTOValidator) {
+		this.userDTOValidator = userDTOValidator;
 	}
 
 }

@@ -17,7 +17,7 @@ import com.kiesoft.dto.user.UserDTO;
 import com.kiesoft.exceptions.PersistenceProblemException;
 import com.kiesoft.jpa.user.UserEntity;
 import com.kiesoft.repository.UserRepository;
-import com.kiesoft.service.note.UserDTOService;
+import com.kiesoft.service.user.UserDTOService;
 
 @Transactional
 public class DefaultUserDTOService implements UserDTOService {
