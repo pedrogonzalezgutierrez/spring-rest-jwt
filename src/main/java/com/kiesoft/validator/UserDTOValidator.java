@@ -29,6 +29,9 @@ public class UserDTOValidator extends AbstractValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 
 		UserDTO dto = (UserDTO) target;
+		// Avoid XSS injections
+		dto.setUsername(sanitizeString(dto.getUsername()));
+		dto.setPassword(sanitizeString(dto.getPassword()));
 
 		// Nothing can be empty
 		rejectFieldIfEmptyOrWhitespace("username", errors);
@@ -38,17 +41,8 @@ public class UserDTOValidator extends AbstractValidator implements Validator {
 			return;
 		}
 
-		if (dto.getUsername()!=null && dto.getUsername().length() < USERNAME_MIN) {
-			errors.rejectValue("username", "The username is too short");
-		} else if (dto.getUsername()!=null && dto.getUsername().length() > USERNAME_MAX) {
-			errors.rejectValue("username", "The username is too big");
-		}
-
-		if (dto.getPassword()!=null && dto.getPassword().length() < PASSWORD_MIN) {
-			errors.rejectValue("password", "The password is too short");
-		} else if (dto.getPassword()!=null && dto.getPassword().length() > PASSWORD_MAX) {
-			errors.rejectValue("password", "The password is too big");
-		}
+		rejectFieldIfStringMinMaxLength("username", dto.getUsername(), USERNAME_MIN, USERNAME_MAX, errors);
+		rejectFieldIfStringMinMaxLength("password", dto.getPassword(), PASSWORD_MIN, PASSWORD_MAX, errors);
 
 		if (errors.hasErrors() == true) {
 			return;

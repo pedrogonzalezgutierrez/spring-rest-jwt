@@ -8,19 +8,18 @@ import org.springframework.validation.ValidationUtils;
 public abstract class AbstractValidator {
 
 	public void rejectFieldIfEmptyOrWhitespace(String field, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, "error.field-required", "This field is required");
-
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, field+" is required");
 	}
 
 	public void rejectFieldIfStringMinMaxLength(String field, String string, int min, int max, Errors errors) {
 		if ((string.length() < min) || (string.length() > max)) {
-			errors.rejectValue(field, "error.field-length", new Object[] { min, max }, "Wrong length");
+			errors.rejectValue(field, field+": Wrong length");
 		}
 	}
 
 	public void rejectFieldIfNumberMinMaxRange(String field, Integer number, int min, int max, Errors errors) {
 		if ((number < min) || (number > max)) {
-			errors.rejectValue(field, "error.field-range", new Object[] { min, max }, "Wrong range");
+			errors.rejectValue(field, field+": Wrong range");
 		}
 	}
 
