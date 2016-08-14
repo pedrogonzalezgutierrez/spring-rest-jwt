@@ -2,12 +2,9 @@ package com.kiesoft.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-
-import com.kiesoft.auth.authority.DefaultGrantedAuthority;
 
 public class StatelessAuthentication implements Authentication {
 
@@ -29,12 +26,27 @@ public class StatelessAuthentication implements Authentication {
 	/**
 	 * User roles
 	 */
-	private List<DefaultGrantedAuthority> roles = new ArrayList<>();
+	private Collection<? extends GrantedAuthority> roles = new ArrayList<>();
 
 	/**
 	 * Is authenticated?
 	 */
 	private Boolean isAuthenticated;
+	
+	/**
+	 * User token for this request
+	 */
+	private String token;
+
+	/**
+	 * Use this constructor when you want to authenticate by username and token
+	 * @param name
+	 */
+	public StatelessAuthentication(String name, String token) {
+		this.name = name;
+		this.token = token;
+		this.isAuthenticated = Boolean.FALSE;
+	}
 
 	/**
 	 * Use this constructor for populating a User with Roles
@@ -46,11 +58,7 @@ public class StatelessAuthentication implements Authentication {
 	public StatelessAuthentication(String name, String password, Collection<? extends GrantedAuthority> collection) {
 		this.name = name;
 		this.password = password;
-		List<DefaultGrantedAuthority> roles = new ArrayList<>();
-		for (GrantedAuthority grantedAuthority : collection) {
-			roles.add(new DefaultGrantedAuthority(grantedAuthority.getAuthority()));
-		}
-		this.roles = roles;
+		this.roles = collection;
 		this.isAuthenticated = Boolean.TRUE;
 	}
 
@@ -85,7 +93,7 @@ public class StatelessAuthentication implements Authentication {
 	 */
 	@Override
 	public Object getDetails() {
-		return null;
+		return token;
 	}
 
 	/**
@@ -99,6 +107,10 @@ public class StatelessAuthentication implements Authentication {
 	@Override
 	public boolean isAuthenticated() {
 		return isAuthenticated;
+	}
+	
+	public String getToken() {
+		return token;
 	}
 
 	/**

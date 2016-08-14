@@ -14,7 +14,7 @@ public class DefaultResponseErrorService implements ResponseErrorService {
 	public List<String> parseBindingErrors(BindingResult result) {
 		List<String> ret=new ArrayList<>();
 		for (ObjectError objectError : result.getAllErrors()) {
-			ret.add(objectError.getDefaultMessage());
+			ret.add(objectError.getCode());
 		}
 		return ret;
 	}

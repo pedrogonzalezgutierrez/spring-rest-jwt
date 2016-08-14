@@ -6,12 +6,15 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.dozer.DozerBeanMapper;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import com.kiesoft.dto.metadata.MetadataUsernameDTO;
 import com.kiesoft.dto.user.UserDTO;
+import com.kiesoft.exceptions.PersistenceProblemException;
 import com.kiesoft.jpa.user.UserEntity;
 import com.kiesoft.repository.UserRepository;
 import com.kiesoft.service.note.UserDTOService;
@@ -29,8 +32,8 @@ public class DefaultUserDTOService implements UserDTOService {
 	public UserDTO save(UserDTO dto) {
 		try {
 			return dozerBeanMapper.map(repository.save(dozerBeanMapper.map(dto, UserEntity.class)), UserDTO.class);
-		} catch (Exception e) {
-			return null;
+		} catch (ConstraintViolationException e) {
+			throw new PersistenceProblemException(e);
 		}
 	}
 
@@ -42,8 +45,8 @@ public class DefaultUserDTOService implements UserDTOService {
 	@Override
 	public Page<UserDTO> findAll(Pageable page) {
 		List<UserDTO> listDTO=new ArrayList<>();
-		for( UserEntity noteEntity : repository.findAll() ) {
-			listDTO.add(dozerBeanMapper.map(noteEntity, UserDTO.class));
+		for( UserEntity entity : repository.findAll(page) ) {
+			listDTO.add(dozerBeanMapper.map(entity, UserDTO.class));
 		}
 		return new PageImpl<>(listDTO, page, repository.count());
 	}
@@ -55,6 +58,15 @@ public class DefaultUserDTOService implements UserDTOService {
 			return entity == null ? null : dozerBeanMapper.map(entity, UserDTO.class);
 		}
 		return null;
+	}
+
+	@Override
+	public Page<MetadataUsernameDTO> findAllByUsername(Pageable page) {
+		List<MetadataUsernameDTO> ret=new ArrayList<>();
+		for( UserEntity entity : repository.findAll(page) ) {
+			ret.add(dozerBeanMapper.map(entity, MetadataUsernameDTO.class));
+		}
+		return new PageImpl<>(ret, page, repository.count());
 	}
 
 }
