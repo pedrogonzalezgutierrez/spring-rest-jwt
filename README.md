@@ -12,11 +12,10 @@ JWT is compact because of its smaller size, JWTs can be sent through an URL, POS
 
 ## How JWT works
 The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity protected with a Message Authentication Code (MAC) and/or encrypted.
+**Named imports:**
 
-## Spring Security
-
-There are two different endpoints:
-0. Create a new user: POST /user?username={user}&password={pass}
+## End Points
+** Create a new user: POST /user?username={user}&password={pass} **
 ```
 POST /user?username=pedro&password=pedro
 {
