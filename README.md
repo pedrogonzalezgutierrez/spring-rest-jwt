@@ -14,4 +14,119 @@ JWT is compact because of its smaller size, JWTs can be sent through an URL, POS
 The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity protected with a Message Authentication Code (MAC) and/or encrypted.
 
 ## Spring Security
-The security of this web application is configured *security.xml*. There are three roles *ROLE_ADMIN*, *ROLE_EDITOR* and *ROLE_STAFF*. There are different endpoints for each role.
+
+There are two different endpoints:
+0. Create a new user: POST /user?username={user}&password={pass}
+```
+POST /user?username=pedro&password=pedro
+{
+  "message": "Welcome pedro"
+}
+```
+```
+POST /user?username=pedro&password=pedro
+{
+  "message": "Validation",
+  "items": [
+    "The username already exists"
+  ]
+}
+```
+```
+POST /user?username=&password=po
+{
+  "message": "Validation",
+  "items": [
+    "The username is too short",
+    "The password is too short"
+  ]
+}
+```
+
+1. Retrieve users (ROLE_ADMIN): GET /user?token={validToken}[?page={numPage}&size={numElements}&sort={attribute}]
+```
+GET /user
+{
+  "timestamp": 1471146481761,
+  "status": 403,
+  "error": "Forbidden",
+  "message": "Access Denied",
+  "path": "/user"
+}
+```
+```
+GET /user?token=MyValid.Token.JWT
+{
+  "message": "List users",
+  "items": {
+    "content": [
+      {
+        "id": 1,
+        "username": "pedro"
+      },
+      {
+        "id": 2,
+        "username": "user"
+      },
+      {
+        "id": 3,
+        "username": "git"
+      },
+      {
+        "id": 4,
+        "username": "debian"
+      },
+      {
+        "id": 5,
+        "username": "macarena"
+      }
+    ],
+    "last": false,
+    "totalElements": 9,
+    "totalPages": 2,
+    "numberOfElements": 5,
+    "sort": null,
+    "first": true,
+    "size": 5,
+    "number": 0
+  }
+}
+```
+```
+GET /user?page=0&sort=username&size=3&token=MyValid.Token.JWT
+{
+  "message": "List users",
+  "items": {
+    "content": [
+      {
+        "id": 6,
+        "username": "betis"
+      },
+      {
+        "id": 4,
+        "username": "debian"
+      },
+      {
+        "id": 3,
+        "username": "git"
+      }
+    ],
+    "last": false,
+    "totalElements": 9,
+    "totalPages": 3,
+    "numberOfElements": 3,
+    "sort": [
+      {
+        "direction": "ASC",
+        "property": "username",
+        "ignoreCase": false,
+        "nullHandling": "NATIVE",
+        "ascending": true
+      }
+    ],
+    "first": true,
+    "size": 3,
+    "number": 0
+  }
+}
+```
