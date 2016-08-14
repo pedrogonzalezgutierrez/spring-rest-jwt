@@ -15,7 +15,7 @@ The claims in a JWT are encoded as a JSON object that is used as the payload of 
 **Named imports:**
 
 ## End Points
-**POST /user?username={user}&password={pass}**
+**0. POST /user?username={user}&password={pass}**
 
 Create a new user
 ```
@@ -44,7 +44,7 @@ POST /user?username=&password=po
 }
 ```
 
-**GET /user?token={validToken}[?page={numPage}&size={numElements}&sort={attribute}]**
+**1. GET /user?token={validToken}[?page={numPage}&size={numElements}&sort={attribute}]**
 
 Retrieve users (ROLE_ADMIN)
 ```
