@@ -15,6 +15,7 @@ import com.kiesoft.auth.StatelessAuthentication;
 import com.kiesoft.auth.authority.DefaultGrantedAuthority;
 import com.kiesoft.dto.role.RoleDTO;
 import com.kiesoft.dto.user.UserDTO;
+import com.kiesoft.exceptions.InvalidTokenException;
 import com.kiesoft.service.note.UserDTOService;
 
 public class AuthenticationProviderJWT implements AuthenticationProvider {
@@ -48,10 +49,9 @@ public class AuthenticationProviderJWT implements AuthenticationProvider {
 			return new StatelessAuthentication(userDTO.getUsername(), userDTO.getPassword(), roles);
 			
 		} catch (InvalidSignatureException e) {
-			// Token is not valid, signature fail. Log an exception
+			throw new InvalidTokenException(statelessAuthentication.getToken());
 		}
 		
-		return null;
 	}
 
 }

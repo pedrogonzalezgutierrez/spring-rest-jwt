@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,8 +15,9 @@ import com.kiesoft.dto.response.GenericResponseDTO;
 import com.kiesoft.dto.response.MessagesResponseDTO;
 import com.kiesoft.dto.response.PageResponseDTO;
 import com.kiesoft.dto.user.UserDTO;
+import com.kiesoft.helper.response.ResponseErrorHelper;
+import com.kiesoft.helper.validator.ValidatorHelper;
 import com.kiesoft.service.note.UserDTOService;
-import com.kiesoft.service.response.ResponseErrorService;
 import com.kiesoft.validator.UserDTOValidator;
 
 @RestController
@@ -27,10 +27,13 @@ public class UserController {
 	private UserDTOService userDTOService;
 	
 	@Autowired
-	private UserDTOValidator userDTOValidator;
+	private ResponseErrorHelper responseErrorService;
 	
 	@Autowired
-	private ResponseErrorService responseErrorService;
+	private ValidatorHelper validatorService;
+	
+	@Autowired
+	private UserDTOValidator userDTOValidator;
 	
 	@RequestMapping(value="/user", method=RequestMethod.GET)
 	public ResponseEntity<GenericResponse> users(@PageableDefault(size=5) Pageable page) {
@@ -47,10 +50,7 @@ public class UserController {
 		userDTO.setUsername(username);
 		userDTO.setPassword(password);
 		
-		DataBinder binder = new DataBinder(userDTO);
-		binder.setValidator(userDTOValidator);
-		binder.validate();
-		BindingResult result = binder.getBindingResult();
+		BindingResult result = validatorService.validateObject(userDTO, userDTOValidator);
 		
 		if (result.hasErrors()) {
 			MessagesResponseDTO responseDTO=new MessagesResponseDTO();

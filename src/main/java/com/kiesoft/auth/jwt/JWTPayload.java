@@ -1,9 +1,5 @@
 package com.kiesoft.auth.jwt;
 
-/**
- * Map of the claims of the JWT token
- * 
- */
 public class JWTPayload {
 
 	private String username;

@@ -1,10 +1,10 @@
-package com.kiesoft.service.response;
+package com.kiesoft.helper.response;
 
 import java.util.List;
 
 import org.springframework.validation.BindingResult;
 
-public interface ResponseErrorService {
+public interface ResponseErrorHelper {
 	
 	List<String> parseBindingErrors(BindingResult result);
 

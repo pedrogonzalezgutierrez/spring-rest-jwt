@@ -17,6 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kiesoft.auth.StatelessAuthentication;
 import com.kiesoft.auth.jwt.JWTPayload;
+import com.kiesoft.exceptions.InvalidTokenException;
 
 public class TokenFilterJWT extends OncePerRequestFilter {
 
@@ -34,18 +35,22 @@ public class TokenFilterJWT extends OncePerRequestFilter {
 			// Check if the token is valid
 			
 			// Extract claims
-			final Jwt jwt = JwtHelper.decode(token);
-			final ObjectMapper mapper = new ObjectMapper();
-			final JWTPayload claims = mapper.readValue(jwt.getClaims(), JWTPayload.class);
-			
-			if( claims.getUsername() != null ) {
+			try {
+				final Jwt jwt = JwtHelper.decode(token);
+				final ObjectMapper mapper = new ObjectMapper();
+				final JWTPayload claims = mapper.readValue(jwt.getClaims(), JWTPayload.class);
 				
-				// Try to authenticate
-				Authentication finalAuthentication=authenticationManager.authenticate(new StatelessAuthentication(claims.getUsername(), token));
-				if( finalAuthentication != null ) {
-					SecurityContextHolder.getContext().setAuthentication(finalAuthentication);
+				if( claims.getUsername() != null ) {
+					
+					// Try to authenticate
+					Authentication finalAuthentication=authenticationManager.authenticate(new StatelessAuthentication(claims.getUsername(), token));
+					if( finalAuthentication != null ) {
+						SecurityContextHolder.getContext().setAuthentication(finalAuthentication);
+					}
+					
 				}
-				
+			} catch (Exception e ) {
+				throw new InvalidTokenException(token);
 			}
 			
 		}
@@ -57,7 +62,5 @@ public class TokenFilterJWT extends OncePerRequestFilter {
 	public void setAuthenticationManager(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 	}
-	
-	
 
 }

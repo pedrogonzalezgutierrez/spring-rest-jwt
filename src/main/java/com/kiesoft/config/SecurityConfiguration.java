@@ -9,7 +9,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -20,7 +19,6 @@ import com.kiesoft.auth.filter.TokenFilterJWT;
 @Configuration
 @EnableJpaRepositories(basePackages = "com.kiesoft.repository")
 @EntityScan(basePackages = { "com.kiesoft.jpa" })
-@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	/*
@@ -79,5 +77,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public AuthenticationProviderJWT authenticationProviderJWT() throws Exception {
 		return new AuthenticationProviderJWT();
 	}
+	
+	
 
 }

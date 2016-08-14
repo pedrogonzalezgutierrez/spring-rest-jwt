@@ -14,6 +14,9 @@ public class UserDTOValidator extends AbstractValidator implements Validator {
 	private final static Integer USERNAME_MIN=3;
 	private final static Integer USERNAME_MAX=20;
 	
+	private final static Integer PASSWORD_MIN=3;
+	private final static Integer PASSWORD_MAX=20;
+	
 	@Autowired
 	private UserDTOService userDTOService; 
 
@@ -29,6 +32,7 @@ public class UserDTOValidator extends AbstractValidator implements Validator {
 
 		// Nothing can be empty
 		rejectFieldIfEmptyOrWhitespace("username", errors);
+		rejectFieldIfEmptyOrWhitespace("password", errors);
 
 		if (errors.hasErrors() == true) {
 			return;
@@ -39,7 +43,17 @@ public class UserDTOValidator extends AbstractValidator implements Validator {
 		} else if (dto.getUsername()!=null && dto.getUsername().length() > USERNAME_MAX) {
 			errors.rejectValue("username", "The username is too big");
 		}
-		
+
+		if (dto.getPassword()!=null && dto.getPassword().length() < PASSWORD_MIN) {
+			errors.rejectValue("password", "The password is too short");
+		} else if (dto.getPassword()!=null && dto.getPassword().length() > PASSWORD_MAX) {
+			errors.rejectValue("password", "The password is too big");
+		}
+
+		if (errors.hasErrors() == true) {
+			return;
+		}
+
 		if( userDTOService.findByUsername(dto.getUsername()) != null ) {
 			errors.rejectValue("username", "The username already exists");
 		}

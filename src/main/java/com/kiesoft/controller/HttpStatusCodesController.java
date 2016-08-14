@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HttpStatusCodesController {
-	
-    @RequestMapping(value = "/403", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public ResponseEntity<String> accessDenied() {
-        return ResponseEntity.ok().body("Access denied to this resource");
+		return ResponseEntity.ok().body("Access denied to this resource");
 	}
-    
+
 }

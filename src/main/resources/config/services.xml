@@ -6,8 +6,11 @@
 			http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-	<!-- Response Service -->
-	<bean id="responseErrorService" class="com.kiesoft.serviceimpl.response.DefaultResponseErrorService" />
+	<!-- Response Error Helper -->
+	<bean id="responseErrorHelper" class="com.kiesoft.helperimpl.response.DefaultResponseErrorHelper" />
+	
+	<!-- Validator Helper -->
+	<bean id="validatorHelper" class="com.kiesoft.helperimpl.validator.DefaultValidatorHelper" />
 	
 	<!-- User Service -->
 	<bean id="userDTOService" class="com.kiesoft.serviceimpl.user.DefaultUserDTOService" />
